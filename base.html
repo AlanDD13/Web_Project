@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="icon" href="../static/img/Kripto_logo_mini.png">
+    <title>Kripto</title>
+</head>
+<body style='background-color: #004F86; color: #FFFFFF;'>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003153;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <img src="../static/img/Kripto_logo_mini.png" width="40" height="40" class="rounded mx-right" alt="">
+            Kripto
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Переключатель навигации" style="color: #FFFFFF">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          {% if current_user.is_authenticated %}
+            <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="direction: ltr;">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="padding-left: 85%;">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{{ url_for('account') }}">
+                    <img src="../static/img/User_image_ex.png" alt="avatar" class="rounded-circle mx-left" style="width: 40px;">
+                    {{ current_user.username }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          {% else %}
+            <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="direction: rtl;">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="padding-left: 85%;">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{{ url_for('register') }}">Зарегистрироваться</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{{ url_for('login') }}">Войти</a>
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+<div class='footer fixed-bottom' style='background-color: #003153;'>
+  <footer class="footer">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="{{ url_for('about') }}" class="nav-link px-2 text-muted">About</a></li>
+      </ul>
+      <img src="../static/img/Kripto_logo.png" width="210" height="160.75" class="rounded mx-auto d-block" alt="">
+      <p class="text-center text-muted">© 2022 Kripto, Inc</p>
+  </footer>
+</div>
+</html>
