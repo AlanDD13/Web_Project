@@ -32,19 +32,23 @@
         </div>
       </nav>
     </header>
+    <h1>Hello, {{ current_user.username }}!</h1>
     <main role="main" class="container-fluid d-flex h-100 justify-content-center align-items-center p-0" style="margin-top: 20px">
         <div class="container-fluid">
-          <h1 class="text-center">Hello, Kklersx!</h1>
-          <div class="row align-items-center" style="margin-left: 20px">
-            <div class="row align-items-center">
-                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="{{ url_for('change_username') }}">Change Username</button>
-            </div>
-            <div class="row align-items-center">
-                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="{{ url_for('change_password') }}">Change Password</button>
-            </div>
-            <div class="h-100 row align-items-center">
-                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="{{ url_for('change_email') }}">Change Email</button>
-            </div>
+          <h1 class="text-center">Hello, {{ current_user.username }}!</h1>
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="button" class="btn btn-outline-primary btn-lg btn-block" type="button" style="margin-bottom:10px">
+              <a class="link-light text-decoration-none" href="{{ url_for('change_username') }}">Change Username</a>
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-lg btn-block" style="margin-bottom:10px">
+              <a class="link-light text-decoration-none" href="{{ url_for('change_password') }}">Change Password</a>
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-lg btn-block" style="margin-bottom:10px">
+              <a class="link-light text-decoration-none" href="{{ url_for('change_email') }}">Change Email</a>
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-lg btn-block" style="margin-bottom:10px">
+              <a class="link-light text-decoration-none" href="{{ url_for('logout') }}">Log out</a>
+            </button>
           </div>
         </div>
     </main>

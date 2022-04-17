@@ -1,26 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hello, {{ current_user.username }}!</h1>
     <main role="main" class="container-fluid d-flex h-100 justify-content-center align-items-center p-0" style="margin-top: 20px">
         <div class="container-fluid">
           <h1 class="text-center">Hello, {{ current_user.username }}!</h1>
-          <div class="row align-items-center" style="margin-left: 20px">
-            <div class="row align-items-center">
-                <button type="button" class="btn btn-primary btn-lg btn-block">
-                  <a href="{{ url_for('change_username') }}">Change Username</a>
-                </button>
-            </div>
-            <div class="row align-items-center">
-                <button type="button" class="btn btn-primary btn-lg btn-block">
-                  <a href="{{ url_for('change_password') }}">Change Password</a>
-                </button>
-            </div>
-            <div class="row align-items-center">
-                <button type="button" class="btn btn-primary btn-lg btn-block">
-                  <a href="{{ url_for('change_email') }}">Change Email</a>
-                </button>
-            </div>
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <a type="button" class="btn btn-outline-primary btn-lg btn-block link-light text-decoration-none" href="{{ url_for('change.change_username') }}" style="margin-bottom:10px">
+              Change Username
+            </a>
+            <a type="button" class="btn btn-outline-primary btn-lg btn-block link-light text-decoration-none" href="{{ url_for('change.change_password') }}" style="margin-bottom:10px">
+              Change Password
+            </a>
+            <a type="button" class="btn btn-outline-primary btn-lg btn-block link-light text-decoration-none" href="{{ url_for('change.change_email') }}" style="margin-bottom:10px">
+              Change Email
+            </a>
+            <a type="button" class="btn btn-outline-primary btn-lg btn-block link-light text-decoration-none" href="{{ url_for('authorization.logout') }}" style="margin-bottom:10px">
+              Log out
+            </a>
           </div>
         </div>
     </main>
