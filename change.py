@@ -5,6 +5,7 @@ from form.change_username import ChangeUsernameForm
 from form.change_email import ChangeEmailForm
 from data import db_session
 from data.users import User
+from errors import check_password
 
 
 change = Blueprint('change', __name__, static_folder='static', template_folder='templates')
@@ -18,14 +19,25 @@ def change_password():
         if form.new_password.data == form.new_password_submit.data:
             db_sess = db_session.create_session()
             user = db_sess.query(User).filter(User.email == form.email.data).first()
-            if user and user.check_password(form.new_password.data):
-                return render_template('change_password.html',
-                                       message="Password shouldn't be same as old",
-                                       form=form)
+            if user and user.check_password(form.password.data):
+                if user and user.check_password(form.new_password.data):
+                    return render_template('change_password.html',
+                                        message="Password shouldn't be same as old",
+                                        form=form)
+                else:
+                    try:
+                        if check_password(str(form.password.data)):
+                            user.set_password(form.new_password.data)
+                            db_sess.commit()
+                            return redirect('/')
+                    except Exception as error:
+                        return render_template('change_password.html', title='registration',
+                                    form=form,
+                                    message=error.message)
             else:
-                user.set_password(form.new_password.data)
-                db_sess.commit()
-                return redirect('/')
+                return render_template('change_password.html', title='registration',
+                                    form=form,
+                                    message="Old Password doesn't fit")
         else:
             return render_template('change_password.html',
                                    message="Passwords are different",
@@ -40,6 +52,10 @@ def change_username():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
+        if db_sess.query(User).filter(User.username == form.name.data).first():
+                return render_template('change_username.html', title='registration',
+                                   form=form,
+                                   message="User with such username already exists")
         if user and user.check_password(form.password.data):
             user.set_new_username(form.name.data)
             db_sess.commit()

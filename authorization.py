@@ -4,6 +4,7 @@ from data import db_session
 from data.users import User
 from form.user import RegisterForm
 from form.login import LoginForm
+from errors import check_password
 
 authorization = Blueprint('authorization', __name__, static_folder='static', template_folder='templates')
 
@@ -20,15 +21,25 @@ def registration():
         if db_sess.query(User).filter(User.email == form.email.data).first():
             return render_template('register.html', title='registration',
                                    form=form,
-                                   message="This User already exists")
-        user = User(
-            username=form.name.data,
-            email=form.email.data,
-        )
-        user.set_password(form.password.data)
-        db_sess.add(user)
-        db_sess.commit()
-        return redirect('/login')
+                                   message="User with such email already exists")
+        if db_sess.query(User).filter(User.username == form.name.data).first():
+            return render_template('register.html', title='registration',
+                                   form=form,
+                                   message="User with such username already exists")
+        try:
+            if check_password(str(form.password.data)):
+                user = User(
+                    username=form.name.data,
+                    email=form.email.data,
+                )
+                user.set_password(form.password.data)
+                db_sess.add(user)
+                db_sess.commit()
+                return redirect('/login')
+        except Exception as error:
+            return render_template('register.html', title='registration',
+                                   form=form,
+                                   message=error.message)
     return render_template('register.html', title='registration', form=form)
 
 
