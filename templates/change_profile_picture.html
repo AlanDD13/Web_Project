@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main role="main" class="container-fluid d-flex h-100 justify-content-center align-items-center p-0" style="margin-top: 20px">
+   <form method="POST" action="" enctype="multipart/form-data">
+     {{ form.hidden_tag() }}
+     <fieldset class="form-group">
+       <div class="form-group">
+                    {{ form.picture.label() }}
+                    {{ form.picture(class="form-control-file") }}
+                    {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+        </fieldset>
+        <br>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <div>{{ message }}</div>
+</main>
+{% endblock %}

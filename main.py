@@ -1,10 +1,10 @@
 from flask import Flask, render_template
-from flask_login import login_required, LoginManager
-from data import db_session
-from change import change
-from data.users import User
-from authorization import authorization
+from flask_login import LoginManager, login_required
 
+from authorization import authorization
+from change import change
+from data import db_session
+from data.users import User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'laksjflaksjf'

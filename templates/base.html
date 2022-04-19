@@ -24,7 +24,7 @@
               <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="padding-left: 85%;">
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="{{ url_for('account') }}">
-                    <img src="../static/img/User_image_ex.png" alt="avatar" class="rounded-circle mx-left" style="width: 40px;">
+                    <img src="../{{ current_user.image_file }}" alt="avatar" class="rounded-circle mx-left" style="width: 40px;">
                     {{ current_user.username }}
                   </a>
                 </li>

@@ -1,18 +1,21 @@
 import datetime
+
 import sqlalchemy
-from data.db_session import SqlAlchemyBase
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from data.db_session import SqlAlchemyBase
 
 
 class User(SqlAlchemyBase, UserMixin):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     username = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     modified_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
+    image_file = sqlalchemy.Column(sqlalchemy.String(20), nullable=False, default='static/img/profile_pics/default.png')
 
 
     def set_new_username(self, new_username):

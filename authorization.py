@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, redirect
-from flask_login import login_user, login_required, logout_user
+from flask import Blueprint, redirect, render_template
+from flask_login import login_required, login_user, logout_user
+
 from data import db_session
 from data.users import User
-from form.user import RegisterForm
-from form.login import LoginForm
 from errors import check_password
+from form.login import LoginForm
+from form.user import RegisterForm
 
 authorization = Blueprint('authorization', __name__, static_folder='static', template_folder='templates')
 
