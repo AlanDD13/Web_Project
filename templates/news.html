@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <main role="main" class="container-fluid d-flex h-100 justify-content-center align-items-center p-0" style="margin-top: 20px">
+    <div class="container-fluid">
+      {% for item in news['news'] %}
+        <h1 class="text-center" style="margin-bottom: 50px">{{item['title']}}</h1>
+        <img src="../static/img/news_pics/{{item['image']}}" alt="news picture" class="rounded float-left" style="width: 500px; margin-bottom: 50px">
+        {% for paragraph in item['content'] %}
+          <p class="text-left" style="font-size:20px">{{item['content'][paragraph]}}</p>
+        {% endfor %}
+      {% endfor %}
+    </div>
+</main>
+{% endblock %}

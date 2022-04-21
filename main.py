@@ -5,6 +5,8 @@ from authorization import authorization
 from change import change
 from data import db_session
 from data.users import User
+import json
+import sqlite3
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'laksjflaksjf'
@@ -24,7 +26,48 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    con = sqlite3.connect("db/news.db")
+    cur = con.cursor()
+    result = cur.execute("""SELECT * FROM news""").fetchall()
+    news = {
+        'news': [
+            {
+                "id": item[0],
+                "title": item[1],
+                "image": item[2],
+                "content": ' '.join(item[3].split()[:100]) + '...'
+            }
+            for item in result
+        ]
+    }
+
+    con.close()
+    return render_template('index.html', news=news)
+
+
+@app.route('/<int:id>/<title>')
+def news(id, title):
+    con = sqlite3.connect("db/news.db")
+    cur = con.cursor()
+    result = cur.execute(f"""SELECT * FROM news WHERE id = {id}""").fetchall()
+    content = {}
+    for item in result:
+        for i in range(len(item[3].split('\\n'))):
+            content[f"content{i}"] = item[3].split('\\n')[i] 
+    news = {
+        'news': [
+            {
+                "id": item[0],
+                "title": item[1],
+                "image": item[2],
+                "content": content
+                
+            }
+            for item in result
+        ]
+    }
+    print(content)
+    return render_template('news.html', news=news)
 
 
 @app.route('/account')
