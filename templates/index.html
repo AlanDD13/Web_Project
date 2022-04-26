@@ -6,7 +6,7 @@
       <h1 class="text-center" style="margin-bottom: 10px">Today's news</h1>
       <div class="d-grid gap-2 col-6 mx-auto">
         {% for item in news['news'] %}
-          <a type="button" class="btn btn-outline-primary btn-lg btn-block link-light text-decoration-none" href="{{ url_for('news', id=item['id'], title=item['title']) }}" style="margin-bottom:10px">
+          <a type="button" class="btn btn-outline-primary btn-lg btn-block link-light text-decoration-none" href="{{ url_for('news.news_page', id=item['id'], title=item['title']) }}" style="margin-bottom:10px">
             <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px; margin-left: 10px">
               <div style="margin-bottom: 5px;"><h2 class="text-left">{{item["title"]}}</h2></div>
               <div style="margin-bottom: 5px;"><img src="../static/img/news_pics/{{item['image']}}" alt="news picture" class="rounded float-left" style="width: 300px"></div>

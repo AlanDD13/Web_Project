@@ -3,13 +3,89 @@
 {% block content %}
   <main role="main" class="container-fluid d-flex h-100 justify-content-center align-items-center p-0" style="margin-top: 20px">
     <div class="container-fluid">
-      {% for item in news['news'] %}
-        <h1 class="text-center" style="margin-bottom: 50px">{{item['title']}}</h1>
-        <img src="../static/img/news_pics/{{item['image']}}" alt="news picture" class="rounded float-left" style="width: 500px; margin-bottom: 50px">
-        {% for paragraph in item['content'] %}
-          <p class="text-left" style="font-size:20px">{{item['content'][paragraph]}}</p>
+      <div style="margin-bottom: 20px">
+        {% for item in news['news'] %}
+          <h1 class="text-center" style="margin-bottom: 50px">{{item['title']}}</h1>
+          <img src="../static/img/news_pics/{{item['image']}}" alt="news picture" class="rounded float-left" style="width: 500px; margin-bottom: 50px">
+          {% for paragraph in item['content'] %}
+            <p class="text-left" style="font-size:20px">{{item['content'][paragraph]}}</p>
+          {% endfor %}
         {% endfor %}
-      {% endfor %}
+      </div>
+      <section>
+            <div class="container my-4 py-4 text-dark">
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-6">
+                  <div class="card" style="background-color: #003153;">
+                    <div class="card-body p-4">
+                      <div class="d-flex flex-start w-100">
+                        {% if current_user.is_authenticated %}
+                          <img class="rounded-circle shadow-1-strong me-3"
+                            src="../{{ current_user.image_file }}" alt="avatar" width="65"
+                            height="65" />
+                        {% else %}
+                          <img class="rounded-circle shadow-1-strong me-3"
+                          src="../static/img/profile_pics/default.png" alt="avatar" width="65"
+                          height="65" />
+                      {% endif %}
+                      <div class="w-100">
+                        <h5 class="text-white">Add a comment</h5>
+                        <form action='#', method='post'>
+                          <div class="form-outline">
+                            <textarea class="form-control" id="textAreaExample" rows="4" name='comment'></textarea>
+                            <label class="form-label text-white" for="textAreaExample">Your comment?</label>
+                          </div>
+                          <div class="d-flex justify-content-between mt-3">
+                            {% if current_user.is_authenticated %}
+                              <p><input type="submit" class="btn btn-outline-danger btn-lg btn-block link-light text-decoration-none" value='Send'/>
+                              </p>
+                            {% else %}
+                              <a type="button" class="btn btn-outline-danger btn-lg btn-block link-light text-decoration-none" href="{{ url_for('authorization.registration') }}">
+                                Registrate to leave a comment
+                              </a>
+                            {% endif %}
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+      <section>
+        <div class="container my-3 py-3 text-dark">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10 col-xl-8">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="text-white mb-0">Comments</h4>
+              </div>
+              {% for comment in comments['comments'] %}
+                <div class="card mb-3"  style="background-color: #003153;">
+                  <div class="card-body">
+                      <div class="d-flex flex-start">
+                        <img class="rounded-circle shadow-1-strong me-3"
+                          src="../{{comment['user_img']}}" alt="avatar" width="40"
+                          height="40" />
+                        <div class="w-100">
+                          <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="text-primary fw-bold mb-0">
+                              {{comment['user_username']}}
+                              <span class="text-white ms-2">{{comment['comment']}}</span>
+                            </h6>
+                            <p class="mb-0 text-white">2 days ago</p>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              {% endfor %}
+
+              <div class="d-flex flex-row">
+                <i class="far fa-check-circle text-primary"></i>
+              </div>
+      </section>
     </div>
 </main>
 {% endblock %}
