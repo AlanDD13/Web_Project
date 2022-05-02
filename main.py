@@ -1,19 +1,19 @@
+import sqlite3
+
 from flask import Flask, render_template
 from flask_login import LoginManager, login_required
 
 from authorization import authorization
 from change import change
-from news import news
 from data import db_session
 from data.users import User
-import sqlite3
+from news import news
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'laksjflaksjf'
 app.register_blueprint(change)
 app.register_blueprint(authorization)
 app.register_blueprint(news)
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -35,8 +35,9 @@ def index():
             {
                 "id": item[0],
                 "title": item[1],
-                "image": item[2],
-                "content": ' '.join(item[3].split()[:100]) + '...'
+                "image": item[3],
+                "content": item[2],
+                "date": item[5],
             }
             for item in result
         ]

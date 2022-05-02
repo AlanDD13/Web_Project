@@ -7,11 +7,11 @@ from PIL import Image
 
 from data import db_session
 from data.users import User
-from errors import check_password
 from form.change_email import ChangeEmailForm
 from form.change_password import ChangePasswordForm
 from form.change_profile_image import ChangeProfileImage
 from form.change_username import ChangeUsernameForm
+from password_checker import check_password
 
 change = Blueprint('change', __name__, static_folder='static', template_folder='templates')
 

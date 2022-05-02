@@ -3,9 +3,9 @@ from flask_login import login_required, login_user, logout_user
 
 from data import db_session
 from data.users import User
-from errors import check_password
 from form.login import LoginForm
 from form.user import RegisterForm
+from password_checker import check_password
 
 authorization = Blueprint('authorization', __name__, static_folder='static', template_folder='templates')
 

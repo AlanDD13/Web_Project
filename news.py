@@ -1,10 +1,10 @@
-from flask import Blueprint, redirect, render_template, url_for, request
 import sqlite3
 
+from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user
+
 from data import db_session
 from data.users import User
-
 
 news = Blueprint('news', __name__, static_folder='static', template_folder='templates')
 
@@ -21,17 +21,14 @@ def news_page(id, title):
     con = sqlite3.connect("db/news.db")
     cur = con.cursor()
     result = cur.execute(f"""SELECT * FROM news WHERE id = {id}""").fetchall()
-    content = {}
-    for item in result:
-        for i in range(len(item[3].split('\\n'))):
-            content[f"content{i}"] = item[3].split('\\n')[i] 
     news = {
         'news': [
             {
                 "id": item[0],
                 "title": item[1],
-                "image": item[2],
-                "content": content
+                "pre_content": item[2],
+                "image": item[3],
+                "content": item[4],
                 
             }
             for item in result
