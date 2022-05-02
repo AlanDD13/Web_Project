@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user
@@ -45,7 +46,8 @@ def news_page(id, title):
                 'user_id': comment[1],
                 'user_img': user_data(comment[1])[0],
                 'user_username': user_data(comment[1])[1],
-                'comment': comment[2]
+                'comment': comment[2],
+                'date': comment[4]
             }
             for comment in result
         ]
@@ -59,7 +61,7 @@ def news_page(id, title):
 def news_page_post(id, title):
     con = sqlite3.connect("db/comments.db")
     cur = con.cursor()
-    cur.execute(f"""INSERT INTO comments(user_id, comment, news_id) VALUES({current_user.id}, '{request.form['comment']}', {id})""")
+    cur.execute(f"""INSERT INTO comments(user_id, comment, news_id, date) VALUES({current_user.id}, '{request.form['comment']}', {id}, '{datetime.now():%Y-%m-%d}')""")
     con.commit()
 
     return redirect(url_for('news.news_page', id=id, title=title))

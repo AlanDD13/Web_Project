@@ -7,8 +7,10 @@
         {% for item in news['news'] %}
           <h1 class="text-center" style="margin-bottom: 50px">{{item['title']}}</h1>
           <p class="text-left" style="font-size:20px">{{item['pre_content']}}</p>
-          <img src="{{item['image']}}" alt="article picture" class="rounded float-center" style="width: 500px; margin-bottom: 50px">
-          {{item['content']|safe}}
+          <img src="{{item['image']}}" alt="article picture" class="rounded float-center" style="object-fit: scale-down; max-width: 80%; margin-bottom: 50px">
+          <div style="width: 100%; .img{width: 100%;}">
+            {{item['content']|safe}}
+          </div>
         {% endfor %}
       </div>
       <section>
@@ -73,7 +75,7 @@
                               {{comment['user_username']}}
                               <span class="text-white ms-2">{{comment['comment']}}</span>
                             </h6>
-                            <p class="mb-0 text-white">2 days ago</p>
+                            <p class="mb-0 text-white">{{comment['date']}}</p>
                           </div>
                         </div>
                       </div>
