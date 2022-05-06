@@ -76,5 +76,6 @@ def parse():
                 cur.execute(f"""INSERT INTO news(title, pre_content, image, content, date) VALUES(?, ?, ?, ?, ?)""", (str(item['title']),\
                      str(item['pre_content']), str(item['img']), str(item['content']), str(item['date'])))
                 con.commit()
+        print("parse done")
     else:
         raise ArticleConnectionError(f'Problems with connection to website: {html.status_code}')

@@ -31,16 +31,16 @@ def index():
     cur = con.cursor()
     result = cur.execute("""SELECT * FROM news""").fetchall()
     news = {
-        'news': [
+        'news': sorted([
             {
-                "id": item[0],
+                "id": int(item[0]),
                 "title": item[1],
                 "image": item[3],
                 "content": item[2],
-                "date": item[5],
+                "date": item[5]
             }
             for item in result
-        ]
+        ], key=lambda x: x['id'], reverse=True)
     }
 
     con.close()

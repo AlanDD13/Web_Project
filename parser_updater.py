@@ -1,5 +1,5 @@
 import time
-from parser import parse
+from parser import *
 
 import schedule
 
